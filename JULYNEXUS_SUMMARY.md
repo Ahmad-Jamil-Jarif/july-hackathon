@@ -137,7 +137,7 @@ JulyDigonto addresses the three critical societal crises during and after mass m
 
 ### New Directories:
 - `ai-engine/` - Python FastAPI microservice for forensics
-  - `julynexus/` - Complete JulyDigonto project structure
+  - `JulyDigonto/` - Complete JulyDigonto project structure
   - `iot-kiosk/` - Arduino firmware for civic dignity kiosk
 - `julynexus/readme.md` - Project documentation
 
@@ -145,8 +145,8 @@ JulyDigonto addresses the three critical societal crises during and after mass m
 - `ai-engine/main.py` - FastAPI application entry point
 - `ai-engine/forensics.py` - Core forensic analysis logic
 - `ai-engine/requirements.txt` - Python dependencies
-- `julynexus/iot-kiosk/kiosk_controller.ino` - Arduino kiosk firmware
-- `julynexus/readme.md` - Project overview
+- `JulyDigonto/iot-kiosk/kiosk_controller.ino` - Arduino kiosk firmware
+- `JulyDigonto/readme.md` - Project overview
 - `DEMO_GUIDE.md` - Demonstration instructions
 - `JULYNEXUS_SUMMARY.md` - This summary document
 

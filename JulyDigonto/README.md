@@ -60,7 +60,7 @@ The result is a practical system for turning messy evidence into structured acti
 ## Project structure
 
 ```text
-julynexus/
+JulyDigonto/
 ├── backend/                # FastAPI API and services
 │   ├── app/                # Main application code, routes, schemas, security
 │   ├── tests/              # Backend tests
