@@ -1,10 +1,10 @@
-# JulyNexus Implementation Summary
+# JulyDigonto Implementation Summary
 
-This document summarizes the implementation of the JulyNexus platform based on the original instruction document for Track B: Spirit of July hackathon.
+This document summarizes the implementation of the JulyDigonto platform based on the original instruction document for Track B: Spirit of July hackathon.
 
 ## Overview
 
-JulyNexus addresses the three critical societal crises during and after mass movements like the July Uprising (2024):
+JulyDigonto addresses the three critical societal crises during and after mass movements like the July Uprising (2024):
 1. **Epistemic Erosion & Information Warfare** - Combat deepfakes and disinformation
 2. **Loss of Truth & Unverifiable Historical Evidence** - Preserve authentic media with cryptographic provenance
 3. **Inefficient Citizen Support & Dignity Deficit** - Transparent aid distribution with privacy protection
@@ -137,7 +137,7 @@ JulyNexus addresses the three critical societal crises during and after mass mov
 
 ### New Directories:
 - `ai-engine/` - Python FastAPI microservice for forensics
-- `julynexus/` - Complete JulyNexus project structure
+  - `julynexus/` - Complete JulyDigonto project structure
   - `iot-kiosk/` - Arduino firmware for civic dignity kiosk
 - `julynexus/readme.md` - Project documentation
 
@@ -297,7 +297,7 @@ All core components are functional and demonstrable:
 
 ## Conclusion
 
-The implementation successfully delivers a functional prototype of the JulyNexus platform that addresses all core requirements from the instruction document:
+The implementation successfully delivers a functional prototype of the JulyDigonto platform that addresses all core requirements from the instruction document:
 
 ✅ **AI-Powered Verification**: Realistic deepfake detection and media authentication  
 ✅ **Decentralized Preservation**: IPFS-based permanent storage with cryptographic integrity  

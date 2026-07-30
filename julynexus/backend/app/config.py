@@ -33,4 +33,4 @@ CORS_ALLOW_ORIGINS: list[str] = os.getenv(
     "CORS_ALLOW_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
 ).split(",")
 
-DB_URL: str = "sqlite:///" + str(DATA_DIR / "julydigonto.sqlite")
+DB_URL: str = "sqlite:///" + str(DATA_DIR / "julynexus.sqlite")

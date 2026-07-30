@@ -1,6 +1,6 @@
-# Security Improvements Summary for JulyNexus AI Forensics Engine
+# Security Improvements Summary for JulyDigonto AI Forensics Engine
 
-This document outlines the security enhancements and loophole fixes implemented in the JulyNexus AI Forensics Engine.
+This document outlines the security enhancements and loophole fixes implemented in the JulyDigonto AI Forensics Engine.
 
 ## Identified Vulnerabilities and Fixes
 

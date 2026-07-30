@@ -1,6 +1,6 @@
-# JulyNexus Demonstration Guide
+# JulyDigonto Demonstration Guide
 
-This guide demonstrates how to showcase the JulyNexus platform capabilities for the hackathon demo.
+This guide demonstrates how to showcase the JulyDigonto platform capabilities for the hackathon demo.
 
 ## Demo Scenario: Verifying and Preserving Historical Media
 
@@ -61,7 +61,7 @@ Use any image or video file as test evidence.
 ### Step 4: Offline Access (IoT Kiosk)
 1. During internet blackout, citizens visit physical kiosk
 2. Kiosk displays:
-   - Welcome message: "JulyNexus Kiosk - Spirit of July"
+  - Welcome message: "JulyDigonto Kiosk - Spirit of July"
    - Motion-activated welcome when approached
    - Memorial content from IPFS cache (pre-loaded)
 3. Citizens can:

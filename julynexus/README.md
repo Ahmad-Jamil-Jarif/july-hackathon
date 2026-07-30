@@ -1,178 +1,185 @@
-# JulyNexus
+# JulyDigonto
 
-An AI-powered platform for preserving truth and dignity during and after mass movements, inspired by the July Uprising (2024).
+<div align="center">
 
-## Overview
+<p>
+  <img src="https://img.shields.io/badge/AI%20for%20Truth-Enabled-2563eb?style=for-the-badge" alt="AI for truth" />
+  <img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge" alt="FastAPI backend" />
+  <img src="https://img.shields.io/badge/Next.js-Frontend-000000?style=for-the-badge" alt="Next.js frontend" />
+</p>
 
-JulyNexus addresses three critical societal crises during and after historic mass movements:
-1. **Epistemic Erosion & Information Warfare** - Combat deepfakes and disinformation
-2. **Loss of Truth & Unverifiable Historical Evidence** - Preserve authentic media with cryptographic provenance
-3. **Inefficient Citizen Support & Dignity Deficit** - Transparent aid distribution with privacy protection
+   <h3>An AI-powered civic platform for preserving truth, evidence, and dignity during crises.</h3>
 
-## System Architecture
+<p>JulyDigonto helps transform raw citizen evidence into structured, verifiable insights for journalists, NGOs, aid workers, and communities.</p>
 
+</div>
+
+---
+
+## Problem
+
+During mass movements, emergencies, and periods of unrest, critical evidence often arrives as scattered uploads, screenshots, video clips, and text reports. That information is frequently:
+
+- hard to verify quickly
+- difficult to organize under pressure
+- vulnerable to misinformation and manipulation
+- disconnected from transparent aid and memorial workflows
+
+JulyNexus addresses this by combining AI analysis, civic reporting tools, and transparent recordkeeping in one platform.
+
+---
+
+## Solution
+
+JulyNexus brings together a full workflow that allows users to:
+
+- upload and analyze media for trust and risk signals
+- review structured claim-level analysis
+- preserve testimonies in a memorial archive
+- monitor aid-related activity through a transparent ledger
+- interact with a civic guidance assistant
+- use an offline-ready IoT kiosk concept for field reporting
+
+The result is a practical system for turning messy evidence into structured action.
+
+---
+
+## Key features
+
+- AI-assisted media analysis for images and text
+- Trust scoring across risk, bias, deepfake, and scam indicators
+- Claim-level evidence summaries and verdicts
+- Memorial archive for testimonies and historical memory
+- Transparent aid ledger and dashboard experience
+- Civic chatbot for rights, evidence, and support guidance
+- IoT kiosk prototype for offline civic interaction
+- FastAPI backend with Next.js frontend for rapid iteration
+
+---
+
+## Project structure
+
+```text
+julynexus/
+├── backend/                # FastAPI API and services
+│   ├── app/                # Main application code, routes, schemas, security
+│   ├── tests/              # Backend tests
+│   └── requirements.txt
+├── frontend/               # Next.js web application
+│   ├── app/                # App router pages and views
+│   ├── components/         # Reusable UI and feature components
+│   └── lib/                # API and utility helpers
+├── iot-kiosk/              # Arduino-style kiosk prototype
+├── iot/                    # Supporting IoT assets
+├── scripts/                # Utility scripts and payload helpers
+└── README.md               # Project overview
 ```
-[ Citizen App / IoT Kiosk ] ────> [ Cloudflare Edge / WAF ]
-                                          │
-                                          ▼
-                                [ API Gateway (Node.js) ]
-                                          │
-        ┌────────────────────────────────┼────────────────────────────────┐
-        ▼                                ▼                                ▼
-[ FastAPI AI Engine ]          [ Web3 IPFS Controller ]        [ Database & Vector ]
-  ├── Deepfake Detector          ├── Pinata IPFS Node            ├── Supabase Postgres
-  ├── Metadata Extractor         └── Smart Contract Ledger       └── pgvector Embeddings
-  └── CLIP Deduplicator
+
+---
+
+## Tech stack
+
+### Backend
+- Python
+- FastAPI
+- Pydantic
+- SQLAlchemy
+
+### Frontend
+- Next.js 14
+- React
+- TypeScript
+- Tailwind CSS
+- Radix UI
+- Lucide React
+
+### Supporting tools
+- Axios
+- MapLibre
+- Framer Motion
+- Arduino-compatible IoT prototype
+
+---
+
+## Workflow
+
+```text
+User input
+   ↓
+Media / text analysis
+   ↓
+Structured trust insights
+   ↓
+Memorial, ledger, and civic reporting views
 ```
 
-## Components
+The platform is designed to support a smooth pipeline from evidence intake to public-facing insight.
 
-### 1. AI Fact-Check & Forensics Engine (`ai-engine/`)
-- **Technology**: Python FastAPI
-- **Capabilities**:
-  - Deepfake detection using ML models
-  - EXIF metadata extraction
-  - File hash calculation for duplicate detection
-  - Comprehensive media authenticity analysis
-- **Endpoints**:
-  - `POST /api/v1/analyze/image` - Analyze images
-  - `POST /api/v1/analyze/video` - Analyze videos
-  - `GET /health` - Health check
+---
 
-### 2. Web Application (`web-app/` - Enhanced TrustSetu-AI)
-- **Technology**: Next.js 14 (App Router), TypeScript, Tailwind CSS
-- **Features**:
-  - Media upload and verification interface
-  - IPFS-powered immutable archive (Memorial Vault)
-  - Transparent victim aid ledger
-  - Integration with AI forensics engine
-  - PDF report generation
+## Quick start
 
-### 3. Decentralized Storage & Ledger
-- **IPFS via Pinata**: Permanent, censorship-resistant storage for verified media
-- **Supabase PostgreSQL**: Structured data for media metadata and aid tracking
-- **Database Schema**:
-  - `verified_media`: Stores IPFS CIDs, EXIF data, deepfake scores
-  - `victim_relief_ledger`: Tracks aid disbursements with privacy protection
-  - `media_provenance`: Stores C2PA provenance data
+### 1. Prerequisites
 
-### 4. IoT Civic Dignity Kiosk (`iot-kiosk/`)
-- **Technology**: Arduino Uno with LCD, RFID, PIR sensor, buttons
-- **Features**:
-  - Offline-first operation during internet blackouts
-  - RFID martyr tribute cards
-  - Emergency reporting button
-  - Visual and audio feedback systems
-  - Local data storage with sync capabilities
-
-## Setup Instructions
-
-### Prerequisites
-- Node.js 18+
 - Python 3.10+
-- Supabase account
-- Pinata account (for IPFS)
-- Arduino IDE (for kiosk firmware)
+- Node.js 18+
+- npm
+- Optional: virtual environment for Python
 
-### Backend (AI Forensics Engine)
+### 2. Backend setup
+
 ```bash
-cd ai-engine
+cd backend
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
+uvicorn app.main:app --reload --port 8000
 ```
 
-### Frontend (Web Application)
+Backend docs will be available at:
+- http://localhost:8000/docs
+- http://localhost:8000/health
+
+### 3. Frontend setup
+
 ```bash
-cd ../TrustSetu-AI-main  # Enhanced version of existing TrustSetu-AI
+cd frontend
 npm install
 npm run dev
 ```
 
-### IoT Kiosk
-1. Upload `kiosk_controller.ino` to Arduino Uno using Arduino IDE
-2. Wire components according to the schematic in documentation
-3. Test functionality
+Open http://localhost:3000
 
-## Key Features
+### 4. Run tests
 
-### AI Forensics
-- Detects deepfakes and synthetic media
-- Extracts and preserves EXIF metadata
-- Calculates perceptual hashes for duplicate detection
-- Provides authenticity scores and detailed reports
-
-### Immutable Archive
-- All verified media pinned to IPFS via Pinata
-- Content-addressed storage prevents tampering
-- Gateway URLs for easy access
-- Integration with blockchain-style provenance tracking
-
-### Transparent Aid System
-- Zero-knowledge beneficiary identification
-- Publicly auditable disbursement ledger
-- Real-time status tracking (Pending/Processing/Disbursed/Failed)
-- Protection against fraud and corruption
-
-### Offline Resilience
-- IoT kiosk operates during internet blackouts
-- Local data storage with automatic sync when connectivity restored
-- Emergency reporting capability without network
-- Solar/battery power options for extended operation
-
-## Data Privacy & Security
-
-- Beneficiary identities protected via hashing
-- No personal data stored in public blockchain/IPFS
-- GDPR-compliant data handling options
-- Secure key management for cryptographic operations
-- Regular security audits and penetration testing
-
-## Deployment
-
-### Docker (Recommended for Production)
 ```bash
-# AI Engine
-docker build -t julynexus-ai ./ai-engine
-docker run -p 8000:8000 julynexus-ai
-
-# Web App (next.js)
-docker build -t julynexus-web ./TrustSetu-AI-main
-docker run -p 3000:3000 julynexus-web
+cd backend
+pytest -q
 ```
 
-### Environment Variables
-Create `.env` files for both services with:
-- `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `PINATA_JWT` for IPFS pinning
-- Other service-specific configurations
+---
 
-## API Documentation
+## Main routes and experiences
 
-### AI Engine Endpoints
-- `POST /api/v1/analyze/image` - Analyze uploaded image
-- `POST /api/v1/analyze/video` - Analyze uploaded video
-- `GET /health` - Service health status
+- /analyze — run trust and claim analysis
+- /verify — verify uploaded media and evidence
+- /vault — browse archived evidence and memorial content
+- /ledger — view aid and transparency data
+- /chatbot — civic guidance assistant
+- /dashboard — overview of operations and status
+- /memorial — memorial and testimony experiences
+- /map — explore civic and incident geography
 
-### Web Application Routes
-- `/verify` - Media upload and verification
-- `/vault` - Explore verified media archive
-- `/ledger` - View transparent aid distribution
-- `/report` - Generate trust reports
+---
 
-## Contributing
+## Development notes
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a pull request
+- The backend exposes a REST API centered around analysis, verification, memorial, aid, and kiosk routes.
+- The frontend is a Next.js app router experience with page-level routes for each civic workflow.
+- The project is intended for hackathon-style rapid prototyping, but the architecture is structured enough to extend into real-world deployment scenarios.
+
+---
 
 ## License
 
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-- Inspired by the resilience of July Uprising (2024) participants
-- Built with open-source technologies: Next.js, FastAPI, IPFS, Supabase, Arduino
-- Dedicated to preserving truth and promoting dignity in times of crisis
+This project is released for civic innovation and demonstration purposes.
