@@ -16,7 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DeepfakeGauge } from "@/components/deepfake-gauge"
-import { UploadZone, type UploadProgress } from "@/components/upload-zone"
+import { UploadZone } from "@/components/upload-zone"
 import { shortCid } from "@/lib/utils"
 import { api, type VerifyImageResponse, type VerifyVideoResponse } from "@/lib/api"
 
@@ -29,7 +29,7 @@ function isVideoResult(r: VerifyResult): r is VerifyVideoResponse {
 
 export function VerifyClient() {
   const [kind, setKind] = useState<MediaKind>("image")
-  const [progress, setProgress] = useState<UploadProgress | null>(null)
+  const [progress, setProgress] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const [result, setResult] = useState<VerifyResult | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -46,11 +46,7 @@ export function VerifyClient() {
         headers: { "Content-Type": file.type || "application/octet-stream" },
         onUploadProgress: (ev) => {
           if (!ev.total) return
-          setProgress({
-            loaded: ev.loaded,
-            total: ev.total,
-            percent: Math.round((ev.loaded / ev.total) * 100),
-          })
+          setProgress(Math.round((ev.loaded / ev.total) * 100))
         },
       })
       setResult(data)
@@ -110,10 +106,9 @@ export function VerifyClient() {
           </div>
 
           <UploadZone
-            kind={kind}
+            accept={kind === "image" ? "image/*" : "video/*"}
             onFile={handleFile}
-            disabled={busy}
-            progress={progress}
+            hint={kind === "image" ? "PNG, JPG, WEBP" : "MP4, MOV, AVI"}
           />
 
           {error && (
@@ -170,7 +165,7 @@ export function VerifyClient() {
                 )}
               </div>
 
-              <DeepfakeGauge score={result.deepfake_score} />
+              <DeepfakeGauge value={result.deepfake_score} />
 
               <div className="grid gap-2 text-sm">
                 <Row label="CID" value={result.cid} mono copyId="cid" onCopy={copy} copied={copied} />
@@ -185,14 +180,27 @@ export function VerifyClient() {
                   />
                 )}
                 {result.exif && (
-                  <Row label="Camera" value={result.exif.camera ?? "—"} />
-                )}
-                {result.exif?.captured_at && (
                   <Row
-                    label="Captured"
-                    value={new Date(result.exif.captured_at).toLocaleString()}
+                    label="Camera"
+                    value={
+                      typeof result.exif.camera === "string"
+                        ? result.exif.camera
+                        : "—"
+                    }
                   />
                 )}
+                {(() => {
+                  const capturedAt = result.exif?.captured_at
+                  if (typeof capturedAt !== "string" && typeof capturedAt !== "number") {
+                    return null
+                  }
+                  return (
+                    <Row
+                      label="Captured"
+                      value={new Date(String(capturedAt)).toLocaleString()}
+                    />
+                  )
+                })()}
                 {isVideoResult(result) && (
                   <Row
                     label="Duration"

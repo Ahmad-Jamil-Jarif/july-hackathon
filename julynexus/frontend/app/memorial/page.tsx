@@ -22,3 +22,6 @@ export default function MemorialPage() {
         </p>
       </header>
       <MemorialClient />
+    </div>
+  )
+}

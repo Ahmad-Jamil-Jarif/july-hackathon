@@ -182,7 +182,7 @@ export function AnalyzeClient() {
                 <CardTitle className="text-base">Overall trust</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <TrustGauge score={result.trust_score} />
+                <TrustGauge value={result.trust_score} />
                 <div className="grid grid-cols-2 gap-2 text-xs md:grid-cols-4">
                   <Metric icon={<ShieldAlert className="size-3.5" />} label="Risk" value={result.overall_risk} />
                   <Metric icon={<Activity className="size-3.5" />} label="Deepfake" value={`${Math.round(result.deepfake_score * 100)}%`} />
@@ -219,7 +219,7 @@ export function AnalyzeClient() {
                     </Button>
                   )}
                 </div>
-              </div>
+              </CardContent>
             </Card>
           </>
         )}

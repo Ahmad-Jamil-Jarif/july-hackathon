@@ -6,14 +6,14 @@ import { UploadCloud, FileImage, FileVideo, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type UploadZoneProps = {
-  accept: string
+  accept?: string
   maxSizeMB?: number
   onFile: (file: File) => void
   hint?: string
 }
 
 export function UploadZone({
-  accept,
+  accept = "",
   maxSizeMB = 25,
   onFile,
   hint,
