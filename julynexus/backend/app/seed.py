@@ -1,4 +1,4 @@
-"""Seed sample data for JulyNexus.
+"""Seed sample data for JulyDigonto.
 
 Run: `python -m app.seed`
 """

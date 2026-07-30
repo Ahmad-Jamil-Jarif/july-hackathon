@@ -1,4 +1,4 @@
-"""FastAPI entry point for JulyNexus backend."""
+"""FastAPI entry point for JulyDigonto backend."""
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
@@ -33,7 +33,7 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="JulyNexus API",
+        title="JulyDigonto API",
         version="0.1.0",
         description="Evidentiary Truth, Civic Dignity, Verified Memory.",
         lifespan=lifespan,
@@ -76,7 +76,7 @@ def create_app() -> FastAPI:
     async def health() -> dict:
         return {
             "status": "ok",
-            "service": "julynexus",
+            "service": "julydigonto",
             "version": "0.1.0",
             "rate_limiter": get_limiter().max_requests,
         }
@@ -84,7 +84,7 @@ def create_app() -> FastAPI:
     @app.get("/")
     async def root() -> dict:
         return {
-            "name": "JulyNexus",
+            "name": "JulyDigonto",
             "docs": "/docs",
             "health": "/health",
         }

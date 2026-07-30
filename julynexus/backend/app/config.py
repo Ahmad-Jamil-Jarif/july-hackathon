@@ -1,7 +1,7 @@
 """Application configuration loaded from environment variables.
 
 Uses pathlib + python-dotenv. Defaults are Windows-friendly so the backend
-boots cleanly out-of-the-box for the JulyNexus hackathon demo.
+boots cleanly out-of-the-box for the JulyDigonto hackathon demo.
 """
 from __future__ import annotations
 
@@ -33,4 +33,4 @@ CORS_ALLOW_ORIGINS: list[str] = os.getenv(
     "CORS_ALLOW_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
 ).split(",")
 
-DB_URL: str = "sqlite:///" + str(DATA_DIR / "julynexus.sqlite")
+DB_URL: str = "sqlite:///" + str(DATA_DIR / "julydigonto.sqlite")

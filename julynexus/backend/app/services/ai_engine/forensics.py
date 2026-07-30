@@ -1,4 +1,4 @@
-"""AI forensics engine for JulyNexus.
+"""AI forensics engine for JulyDigonto.
 
 Implements the deterministic heuristics behind the three verify routes:
 - extract_exif        (test case #1 — EXIF desync detection)

@@ -1,4 +1,4 @@
-"""SQLAlchemy 2.0 ORM models for JulyNexus.
+"""SQLAlchemy 2.0 ORM models for JulyDigonto.
 
 Tables (one per public surface area of the platform):
 - verified_media       (pillar 1: AI forensics + provenance)

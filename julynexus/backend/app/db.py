@@ -1,5 +1,5 @@
 """
-SQLAlchemy database setup for JulyNexus.
+SQLAlchemy database setup for JulyDigonto.
 Uses SQLite for zero-config local development; easily swappable to Postgres.
 All queries use the ORM (parameterized) to prevent SQL injection (test case #5).
 """
@@ -13,7 +13,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 DATA_DIR.mkdir(exist_ok=True)
-DB_PATH = DATA_DIR / "julynexus.sqlite"
+DB_PATH = DATA_DIR / "julydigonto.sqlite"
 DATABASE_URL = "sqlite:///" + str(DB_PATH)
 
 engine = create_engine(

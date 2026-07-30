@@ -1,4 +1,4 @@
-"""Security helpers for JulyNexus.
+"""Security helpers for JulyDigonto.
 
 - HMAC-SHA256 identity hashing (test case #7 — anonymous aid, never store PII)
 - Constant-time compare helpers
