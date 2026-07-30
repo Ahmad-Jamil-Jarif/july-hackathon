@@ -1,0 +1,146 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.github/**'
+      - 'lefthook.yml'
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+      - 'LICENSE'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    if: >-
+      (github.event_name != 'pull_request' || !github.event.pull_request.draft) &&
+      !startsWith(github.head_ref, 'release-please--')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+        with:
+          version: 10.33.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install chromium --with-deps
+
+      - name: Check Formatting
+        run: make format-check
+
+      - name: Lint Code
+        run: make lint
+
+      - name: Run Unit Tests
+        run: make unit
+
+      - name: Store Unit Test Coverage
+        uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
+
+      - name: Build
+        run: make build
+
+      - name: Run E2E Tests (chromium only)
+        run: pnpm exec playwright test --project=chromium
+
+      - name: Run Performance / Lighthouse Tests
+        run: pnpm exec node scripts/lhci-autorun-ci.mjs
+
+      - name: Run Mobile Lighthouse Tests
+        run: pnpm exec node scripts/lhci-autorun-ci.mjs --config=.lighthouserc.mobile.json
+
+      - name: Store Mobile Lighthouse Report
+        uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: lighthouse-report-mobile
+          path: .lighthouseci-mobile/
+          retention-days: 30
+
+      - name: Store Playwright Report
+        uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Store Lighthouse Report
+        uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/
+          retention-days: 30
+
+  sonar:
+    needs: test
+    if: >-
+      (github.event_name != 'pull_request' || !github.event.pull_request.draft) &&
+      !startsWith(github.head_ref, 'release-please--')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Download coverage artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: coverage-report
+          path: coverage/
+
+      - name: Warn if SONAR_TOKEN is missing
+        if: env.SONAR_TOKEN == ''
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: echo "::warning::SONAR_TOKEN is not set — SonarQube scan will be skipped"
+
+      - name: SonarQube Scan
+        if: env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e # v8.2.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io

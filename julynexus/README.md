@@ -1,178 +1,178 @@
-﻿# JulyNexus — Evidentiary Truth, Civic Dignity, Verified Memory
+# JulyNexus
 
-> **Project Code:** JulyNexus · **Hackathon:** July Uprising Memorial Hackathon (2024 cohort) · **Build window:** 48h
+An AI-powered platform for preserving truth and dignity during and after mass movements, inspired by the July Uprising (2024).
 
-JulyNexus is an end-to-end civic-tech platform that turns the three cascading crises of the July Uprising (epistemic erosion, historical tampering, humanitarian/dignity deficit) into a single trustworthy infrastructure.
+## Overview
 
----
+JulyNexus addresses three critical societal crises during and after historic mass movements:
+1. **Epistemic Erosion & Information Warfare** - Combat deepfakes and disinformation
+2. **Loss of Truth & Unverifiable Historical Evidence** - Preserve authentic media with cryptographic provenance
+3. **Inefficient Citizen Support & Dignity Deficit** - Transparent aid distribution with privacy protection
 
-## ⚡ The Problem in 90 seconds
-
-| Crisis | What breaks | Real-world consequence |
-|---|---|---|
-| Information erasure & disinformation | Deepfakes, coordinated inauthentic networks, re-uploaded propaganda | Public memory is rewritten within hours |
-| Historical tampering & ephemerality | Crowdsourced evidence on Big Tech is one takedown away from gone | Court cases collapse; martyrs get erased |
-| Humanitarian & dignity deficit | Victim aid is filed in spreadsheets; families wait months | Re-traumatization, corruption, invisible victims |
-
----
-
-## 🧩 The Solution — One Platform, Three Pillars
+## System Architecture
 
 ```
-                ┌─────────────────────────────────────────────┐
-                │              JulyNexus Platform              │
-                └─────────────────────────────────────────────┘
-              ╱                    │                       ╲
-   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────────┐
-   │  1. VERIFY       │  │  2. PRESERVE     │  │  3. SERVE            │
-   │  AI Forensics    │  │  IPFS Vault +    │  │  Aid Ledger +        │
-   │  + C2PA          │  │  Append-only     │  │  ZK Identity Shield   │
-   │  Provenance      │  │  Ledger          │  │  + Civic Kiosk       │
-   └──────────────────┘  └──────────────────┘  └──────────────────────┘
+[ Citizen App / IoT Kiosk ] ────> [ Cloudflare Edge / WAF ]
+                                          │
+                                          ▼
+                                [ API Gateway (Node.js) ]
+                                          │
+        ┌────────────────────────────────┼────────────────────────────────┐
+        ▼                                ▼                                ▼
+[ FastAPI AI Engine ]          [ Web3 IPFS Controller ]        [ Database & Vector ]
+  ├── Deepfake Detector          ├── Pinata IPFS Node            ├── Supabase Postgres
+  ├── Metadata Extractor         └── Smart Contract Ledger       └── pgvector Embeddings
+  └── CLIP Deduplicator
 ```
 
-**1. Verify** — A FastAPI ML pipeline ingests uploaded photo/video/audio and returns:
-- Deepfake-likelihood score (optical-flow + frame-jitter heuristics)
-- EXIF metadata extraction with tamper flagging
-- C2PA-style content provenance hash
-- Perceptual-hash duplicate detection (CLIP-style, deterministic)
+## Components
 
-**2. Preserve** — Verified evidence is content-addressed (SHA-256 CID) and stored on a local IPFS-emulation layer plus an append-only JSONL ledger. Even if the central server is seized, every node holding the ledger can re-verify and re-serve the evidence.
+### 1. AI Fact-Check & Forensics Engine (`ai-engine/`)
+- **Technology**: Python FastAPI
+- **Capabilities**:
+  - Deepfake detection using ML models
+  - EXIF metadata extraction
+  - File hash calculation for duplicate detection
+  - Comprehensive media authenticity analysis
+- **Endpoints**:
+  - `POST /api/v1/analyze/image` - Analyze images
+  - `POST /api/v1/analyze/video` - Analyze videos
+  - `GET /health` - Health check
 
-**3. Serve** — A victim aid portal with:
-- **Zero-Knowledge Identity Shield** — victim identity is stored as a salted hash; disbursers verify a ZK-style claim without ever learning the PII
-- **Transparent Relief Ledger** — every taka disbursed is on-ledger with a public explorer
-- **Civic Dignity Kiosk** — an offline-first ESP32 + RFID device that lets citizens log tributes, file reports, and trigger panic signals even during internet shutdowns
+### 2. Web Application (`web-app/` - Enhanced TrustSetu-AI)
+- **Technology**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Features**:
+  - Media upload and verification interface
+  - IPFS-powered immutable archive (Memorial Vault)
+  - Transparent victim aid ledger
+  - Integration with AI forensics engine
+  - PDF report generation
 
----
+### 3. Decentralized Storage & Ledger
+- **IPFS via Pinata**: Permanent, censorship-resistant storage for verified media
+- **Supabase PostgreSQL**: Structured data for media metadata and aid tracking
+- **Database Schema**:
+  - `verified_media`: Stores IPFS CIDs, EXIF data, deepfake scores
+  - `victim_relief_ledger`: Tracks aid disbursements with privacy protection
+  - `media_provenance`: Stores C2PA provenance data
 
-## 🏗️ Architecture
+### 4. IoT Civic Dignity Kiosk (`iot-kiosk/`)
+- **Technology**: Arduino Uno with LCD, RFID, PIR sensor, buttons
+- **Features**:
+  - Offline-first operation during internet blackouts
+  - RFID martyr tribute cards
+  - Emergency reporting button
+  - Visual and audio feedback systems
+  - Local data storage with sync capabilities
 
-```
-[ Citizen / Journalist / IoT Kiosk ]
-            │
-            ▼
-   [ Next.js 14 Frontend ] ──── /api/* ──── [ FastAPI Backend ]
-            │                                    │
-            │                                    ├─► AI Verification (OpenCV, Pillow, imagehash)
-            │                                    ├─► IPFS Vault (content-addressed SHA-256)
-            │                                    ├─► Append-only Ledger (JSONL)
-            │                                    └─► Aid + ZK Identity Service
-            │
-            └─► Map view (Leaflet), Civic Pledge Wall, Memorial Tribute Graph
-```
+## Setup Instructions
 
-Full architecture diagram: `docs/architecture.md`
+### Prerequisites
+- Node.js 18+
+- Python 3.10+
+- Supabase account
+- Pinata account (for IPFS)
+- Arduino IDE (for kiosk firmware)
 
----
-
-## ��️ Tech Stack
-
-| Layer | Tech |
-|---|---|
-| Frontend | Next.js 14 (App Router), Tailwind CSS, Framer Motion, Lucide Icons, Leaflet.js |
-| Backend | Python 3.11 + FastAPI, SQLAlchemy + SQLite, Pillow, OpenCV, imagehash |
-| Storage | Local content-addressed vault (IPFS-style), append-only JSONL ledger |
-| IoT / Hardware | ESP32 + Arduino, MFRC522 RFID, 16x2 I2C LCD, PIR, buzzer, LEDs, SD card |
-| Simulator | In-browser kiosk simulator (canvas + JS) for environments without hardware |
-| Auth / Security | Parameterized SQL, ZK-style salted-hash identity, input sanitization, CORS allowlist |
-
----
-
-## 🚀 Quick Start (Windows / PowerShell)
-
-### 1. Backend
-
-```powershell
-cd julynexus/backend
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+### Backend (AI Forensics Engine)
+```bash
+cd ai-engine
 pip install -r requirements.txt
-python -m app.seed           # seed sample martyrs, testimonies, aid ledger
-uvicorn app.main:app --reload --port 8000
+uvicorn main:app --reload --port 8000
 ```
 
-Open API docs: <http://localhost:8000/docs>
-
-### 2. Frontend
-
-```powershell
-cd julynexus/frontend
+### Frontend (Web Application)
+```bash
+cd ../TrustSetu-AI-main  # Enhanced version of existing TrustSetu-AI
 npm install
 npm run dev
 ```
 
-Open: <http://localhost:3000>
+### IoT Kiosk
+1. Upload `kiosk_controller.ino` to Arduino Uno using Arduino IDE
+2. Wire components according to the schematic in documentation
+3. Test functionality
 
-### 3. IoT Kiosk Simulator (no hardware needed)
+## Key Features
 
-Visit <http://localhost:3000/kiosk> — full browser simulation of the ESP32 device including RFID scan, LCD, LEDs, and offline-queue buffering.
+### AI Forensics
+- Detects deepfakes and synthetic media
+- Extracts and preserves EXIF metadata
+- Calculates perceptual hashes for duplicate detection
+- Provides authenticity scores and detailed reports
 
-### 4. Real hardware (optional)
+### Immutable Archive
+- All verified media pinned to IPFS via Pinata
+- Content-addressed storage prevents tampering
+- Gateway URLs for easy access
+- Integration with blockchain-style provenance tracking
 
-Open `iot/firmware/julynexus_kiosk.ino` in Arduino IDE and flash to an ESP32. See `iot/tinkercad/wiring.md` for the Tinkercad schematic.
+### Transparent Aid System
+- Zero-knowledge beneficiary identification
+- Publicly auditable disbursement ledger
+- Real-time status tracking (Pending/Processing/Disbursed/Failed)
+- Protection against fraud and corruption
 
----
+### Offline Resilience
+- IoT kiosk operates during internet blackouts
+- Local data storage with automatic sync when connectivity restored
+- Emergency reporting capability without network
+- Solar/battery power options for extended operation
 
-## 📦 Repo Layout
+## Data Privacy & Security
 
+- Beneficiary identities protected via hashing
+- No personal data stored in public blockchain/IPFS
+- GDPR-compliant data handling options
+- Secure key management for cryptographic operations
+- Regular security audits and penetration testing
+
+## Deployment
+
+### Docker (Recommended for Production)
+```bash
+# AI Engine
+docker build -t julynexus-ai ./ai-engine
+docker run -p 8000:8000 julynexus-ai
+
+# Web App (next.js)
+docker build -t julynexus-web ./TrustSetu-AI-main
+docker run -p 3000:3000 julynexus-web
 ```
-julynexus/
-├── README.md                  ← you are here
-├── backend/                   ← FastAPI + AI pipeline + IPFS vault + ledger
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── routes/            ← verify, vault, aid, kiosk, ledger
-│   │   ├── services/          ← ai_engine, ipfs_vault, zk_identity, ledger
-│   │   ├── data/              ← SQLite + JSONL ledger
-│   │   └── storage/           ← content-addressed blobs
-│   ├── tests/
-│   └── requirements.txt
-├── frontend/                  ← Next.js 14 App Router
-│   └── app/                   ← /, /verify, /vault, /memorial, /aid, /kiosk, /map
-├── iot/
-│   ├── firmware/              ← ESP32 Arduino .ino
-│   └── tinkercad/             ← Wiring diagram + component list
-├── docs/
-│   ├── architecture.md
-│   ├── judge-qa.md            ← Answers to the 10 hard test cases
-│   └── pitch/                 ← Pitch deck markdown
-└── scripts/
-    └── verify_endpoints.ps1    ← Smoke-test all routes
-```
 
----
+### Environment Variables
+Create `.env` files for both services with:
+- `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `PINATA_JWT` for IPFS pinning
+- Other service-specific configurations
 
-## 🧪 Judge Test Cases — All 10 Covered
+## API Documentation
 
-See [`docs/judge-qa.md`](docs/judge-qa.md) for the full Q&A against the 10 hard test cases in the spec.
+### AI Engine Endpoints
+- `POST /api/v1/analyze/image` - Analyze uploaded image
+- `POST /api/v1/analyze/video` - Analyze uploaded video
+- `GET /health` - Service health status
 
-| # | Edge Case | Status |
-|---|---|---|
-| 1 | Blackout EXIF desync → shadow cross-reference | ✅ |
-| 2 | Deepfake submission → SYNTHETIC_MEDIA_DETECTED | ✅ |
-| 3 | Cropped duplicate → perceptual-hash match | ✅ |
-| 4 | Kiosk offline → SD buffer + amber LED | ✅ |
-| 5 | SQL injection → parameterized + sanitized | ✅ |
-| 6 | Takedown attempt → IPFS CID persists | ✅ |
-| 7 | Anonymous aid → ZK salted-hash identity | ✅ |
-| 8 | Traffic spike → async job queue + rate limit | ✅ |
-| 9 | Corrupted RFID → reset + warning beep | ✅ |
-| 10 | Sybil/bot flood → IP rate limit + perplexity check | ✅ |
+### Web Application Routes
+- `/verify` - Media upload and verification
+- `/vault` - Explore verified media archive
+- `/ledger` - View transparent aid distribution
+- `/report` - Generate trust reports
 
----
+## Contributing
 
-## 👥 Team
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a pull request
 
-| Member | Role | Scope |
-|---|---|---|
-| 1 | AI/ML Lead | Deepfake heuristics, EXIF, CLIP-style dedup |
-| 2 | Full-Stack Lead | FastAPI + Next.js, IPFS vault, ledger |
-| 3 | Embedded/IoT | ESP32 firmware, Tinkercad, kiosk simulator |
-| 4 | UI/UX + Pitch | Figma, design system, pitch deck |
+## License
 
----
+MIT License - see LICENSE file for details
 
-## 📜 License
+## Acknowledgments
 
-Built for the July Uprising Memorial Hackathon. Released under MIT for reproducibility.
+- Inspired by the resilience of July Uprising (2024) participants
+- Built with open-source technologies: Next.js, FastAPI, IPFS, Supabase, Arduino
+- Dedicated to preserving truth and promoting dignity in times of crisis

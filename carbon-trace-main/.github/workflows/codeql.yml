@@ -1,0 +1,45 @@
+name: CodeQL
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths-ignore:
+      - "*.md"
+      - "docs/**"
+      - "LICENSE"
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name != 'pull_request' || github.event.pull_request.draft == false) &&
+      !startsWith(github.head_ref, 'release-please--')
+    timeout-minutes: 15
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@e0647621c2984b5ed2f768cb892365bf2a616ad1 # v4.37.2
+        with:
+          languages: javascript-typescript
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@e0647621c2984b5ed2f768cb892365bf2a616ad1 # v4.37.2
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@e0647621c2984b5ed2f768cb892365bf2a616ad1 # v4.37.2
+        with:
+          category: "/language:javascript-typescript"

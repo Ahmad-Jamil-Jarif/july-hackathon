@@ -1,0 +1,64 @@
+name: Security Audit
+
+on:
+  schedule:
+    - cron: "34 3 12,26 * *"
+  push:
+    paths:
+      - .github/workflows/security-audit.yml
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths-ignore:
+      - "*.md"
+      - "docs/**"
+      - "LICENSE"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trivy:
+    name: Trivy Scan
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name != 'pull_request' || github.event.pull_request.draft == false) &&
+      !startsWith(github.head_ref, 'release-please--')
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Run Trivy analysis
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: "repo"
+          scan-ref: "."
+          format: "sarif"
+          output: "results.sarif"
+          scanners: "misconfig,secret,license"
+          severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+          exit-code: "1"
+          trivyignores: ".trivyignore.yaml"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: trivy-sarif
+          path: results.sarif
+          retention-days: 30
+
+      - name: Upload to code-scanning
+        uses: github/codeql-action/upload-sarif@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4.36.1
+        if: always()
+        with:
+          sarif_file: results.sarif
