@@ -15,7 +15,7 @@ def fresh_vault(tmp_path: Path) -> Vault:
 
 
 def test_put_then_get_round_trip(fresh_vault: Vault) -> None:
-    payload = b"JulyNexus test payload 1234"
+    payload = b"JulyDigonto test payload 1234"
     out = fresh_vault.put_bytes(payload)
     cid = out["cid"]
     assert len(cid) == 64

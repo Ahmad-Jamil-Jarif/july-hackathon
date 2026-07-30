@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# JulyNexus project emitter - writes all source files as base64 payloads in scripts/payloads/
+# JulyDigonto project emitter - writes all source files as base64 payloads in scripts/payloads/
 from __future__ import annotations
 import base64, pathlib
 

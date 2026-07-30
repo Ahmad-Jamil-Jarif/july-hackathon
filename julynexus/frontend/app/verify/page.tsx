@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { VerifyClient } from "./verify-client"
 
 export const metadata: Metadata = {
-  title: "Verify Media · JulyNexus",
+  title: "Verify Media · JulyDigonto",
   description:
     "Upload photos and videos to verify provenance, detect deepfakes, and pin evidence to IPFS.",
 }

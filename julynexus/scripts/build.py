@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# JulyNexus project builder - reads payloads from scripts/payloads/*.bin
+# JulyDigonto project builder - reads payloads from scripts/payloads/*.bin
 from __future__ import annotations
 from pathlib import Path
 
