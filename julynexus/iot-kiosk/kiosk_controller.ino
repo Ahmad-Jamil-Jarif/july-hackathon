@@ -31,7 +31,7 @@ void setup() {
 
   // Welcome Banner
   lcd.setCursor(0, 0);
-  lcd.print("JulyNexus Kiosk");
+  lcd.print("JulyDigonto Kiosk");
   lcd.setCursor(0, 1);
   lcd.print("Spirit of July ");
   delay(2000);

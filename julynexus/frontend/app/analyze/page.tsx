@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { AnalyzeClient } from "./analyze-client"
 
 export const metadata: Metadata = {
-  title: "Analyze Claims · JulyNexus",
+  title: "Analyze Claims · JulyDigonto",
   description:
     "Decompose text into atomic claims, check for bias, scam probability, and run fact verification against grounded evidence.",
 }

@@ -25,13 +25,13 @@ During mass movements, emergencies, and periods of unrest, critical evidence oft
 - vulnerable to misinformation and manipulation
 - disconnected from transparent aid and memorial workflows
 
-JulyNexus addresses this by combining AI analysis, civic reporting tools, and transparent recordkeeping in one platform.
+JulyDigonto addresses this by combining AI analysis, civic reporting tools, and transparent recordkeeping in one platform.
 
 ---
 
 ## Solution
 
-JulyNexus brings together a full workflow that allows users to:
+JulyDigonto brings together a full workflow that allows users to:
 
 - upload and analyze media for trust and risk signals
 - review structured claim-level analysis

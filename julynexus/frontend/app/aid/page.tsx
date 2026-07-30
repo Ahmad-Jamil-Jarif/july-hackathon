@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { AidClient } from "./aid-client"
 
 export const metadata: Metadata = {
-  title: "Aid Transparency · JulyNexus",
+  title: "Aid Transparency · JulyDigonto",
   description:
     "Register beneficiary families, disburse funds, and inspect every transaction on the public ledger.",
 }

@@ -39,7 +39,7 @@ JulyDigonto addresses the three critical societal crises during and after mass m
   - `app/api/pin-ipfs/route.ts`: IPFS pinning endpoint
   - `lib/pinata.ts`: Pinata API wrapper
   - `lib/supabase.ts`: Supabase client (enhanced)
-  - `lib/julenexus.ts`: Service layer for JulyNexus features
+  - `lib/julenexus.ts`: Service layer for JulyDigonto features
   - `database_schema.sql`: Complete database schema
 
 #### 3. Victim Aid & Transparency Portal
@@ -64,7 +64,7 @@ JulyDigonto addresses the three critical societal crises during and after mass m
   - Offline-first operation with local logging
   - Automatic sync capability when connectivity restored
 - **Key Features from Instructions**:
-  - Welcome banner: "JulyNexus Kiosk" + "Spirit of July"
+  - Welcome banner: "JulyDigonto Kiosk" + "Spirit of July"
   - Motion detection triggers greeting
   - Button press logs offline reports
   - LED status indicators
@@ -152,7 +152,7 @@ JulyDigonto addresses the three critical societal crises during and after mass m
 
 ### Enhanced Files:
 - `TrustSetu-AI-main/lib/pinata.ts` - Pinata IPFS integration
-- `TrustSetu-AI-main/lib/julenexus.ts` - JulyNexus service layer
+  - `TrustSetu-AI-main/lib/julenexus.ts` - JulyDigonto service layer
 - `TrustSetu-AI-main/app/api/pin-ipfs/route.ts` - IPFS pinning endpoint
 - `TrustSetu-AI-main/database_schema.sql` - Complete DB schema
 
