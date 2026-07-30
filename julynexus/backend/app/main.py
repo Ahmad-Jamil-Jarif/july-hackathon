@@ -14,9 +14,11 @@ from .routes import (
     aid,
     analyze,
     chatbot,
+    factcheck,
     kiosk,
     ledger,
     memorial,
+    report,
     sync,
     vault,
     verify,
@@ -67,6 +69,8 @@ def create_app() -> FastAPI:
     app.include_router(analyze.router)
     app.include_router(chatbot.router)
     app.include_router(sync.router)
+    app.include_router(report.router)
+    app.include_router(factcheck.router)
 
     @app.get("/health")
     async def health() -> dict:

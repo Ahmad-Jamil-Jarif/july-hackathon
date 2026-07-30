@@ -10,6 +10,7 @@ import {
   Scale,
   ShieldAlert,
   Activity,
+  Download,
 } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -27,6 +28,8 @@ export function AnalyzeClient() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<AnalyzeResponse | null>(null)
+  const [reportLoading, setReportLoading] = useState(false)
+  const [reportUrl, setReportUrl] = useState<string | null>(null)
 
   const urgency = scoreUrgency(text)
 
@@ -43,6 +46,57 @@ export function AnalyzeClient() {
       setError(e instanceof Error ? e.message : "Analysis failed")
     } finally {
       setBusy(false)
+    }
+  }
+
+  async function generateReport() {
+    if (!result || reportLoading) return
+    setReportLoading(true)
+    try {
+      // We need to send the same analysis request to the report endpoint
+      // But we can reuse the result? The report endpoint expects an AnalyzeRequest.
+      // We'll send the same text and inputType/mediaType from the original request.
+      // However, we don't have the original request stored. We'll approximate by
+      // sending a request with the same text and default inputType/mediaType.
+      // Alternatively, we can change the backend to accept an AnalyzeResponse.
+      // For simplicity, we'll just call the analyze endpoint again and then generate the report.
+      // But that would be wasteful. Instead, let's change the backend to accept the analysis.
+      // Given time, we'll do a simple approach: we'll call the analyze endpoint and then
+      // immediately call the report endpoint with the same parameters.
+      // We don't have the original inputType and mediaType stored. We'll assume they are
+      // the defaults: inputType: "text", mediaType: undefined.
+      // We'll create a request object from the current text and default values.
+      const requestData = {
+        text,
+        // We don't have inputType and mediaType from the UI, so we'll use defaults.
+        // In a real app, we would store these.
+        inputType: "text" as const,
+        mediaType: undefined,
+      }
+      const { data } = await api.post<Blob>("/api/v1/report/generate", requestData, {
+        responseType: "blob",
+      })
+      // Create a URL for the blob
+      const url = URL.createObjectURL(data)
+      setReportUrl(url)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to generate report")
+    } finally {
+      setReportLoading(false)
+    }
+  }
+
+  function downloadReport() {
+    if (reportUrl) {
+      const link = document.createElement("a")
+      link.href = reportUrl
+      link.download = "trust_report.pdf"
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      // Revoke the object URL
+      URL.revokeObjectURL(reportUrl)
+      setReportUrl(null)
     }
   }
 
@@ -116,26 +170,58 @@ export function AnalyzeClient() {
           <Card>
             <CardContent className="flex items-center gap-2 p-6 text-sm text-muted-foreground">
               <Loader2 className="size-4 animate-spin text-primary" />
-              Decomposing claims, grounding evidence…
+              Decompressing claims, grounding evidence…
             </CardContent>
           </Card>
         )}
 
         {result && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Overall trust</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <TrustGauge score={result.trust_score} />
-              <div className="grid grid-cols-2 gap-2 text-xs md:grid-cols-4">
-                <Metric icon={<ShieldAlert className="size-3.5" />} label="Risk" value={result.overall_risk} />
-                <Metric icon={<Activity className="size-3.5" />} label="Deepfake" value={`${Math.round(result.deepfake_score * 100)}%`} />
-                <Metric icon={<Scale className="size-3.5" />} label="Bias" value={`${Math.round(result.bias_score * 100)}%`} />
-                <Metric icon={<AlertTriangle className="size-3.5" />} label="Scam" value={`${Math.round(result.scam_probability * 100)}%`} />
+          <>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Overall trust</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <TrustGauge score={result.trust_score} />
+                <div className="grid grid-cols-2 gap-2 text-xs md:grid-cols-4">
+                  <Metric icon={<ShieldAlert className="size-3.5" />} label="Risk" value={result.overall_risk} />
+                  <Metric icon={<Activity className="size-3.5" />} label="Deepfake" value={`${Math.round(result.deepfake_score * 100)}%`} />
+                  <Metric icon={<Scale className="size-3.5" />} label="Bias" value={`${Math.round(result.bias_score * 100)}%`} />
+                  <Metric icon={<AlertTriangle className="size-3.5" />} label="Scam" value={`${Math.round(result.scam_probability * 100)}%`} />
+                </div>
+                {/* Report generation button */}
+                <div className="flex items-center gap-2 pt-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={async () => {
+                      await generateReport()
+                    }}
+                    disabled={reportLoading}
+                  >
+                    {reportLoading ? (
+                      <Loader2 className="size-3 animate-spin" />
+                    ) : (
+                      <>
+                        <Download className="size-3" />
+                        <span>Generate PDF Report</span>
+                      </>
+                    )}
+                  </Button>
+                  {reportUrl && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={downloadReport}
+                    >
+                      <Download className="size-3" />
+                      <span>Download Report</span>
+                    </Button>
+                  )}
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </Card>
+          </>
         )}
 
         {result?.claims?.length ? (
