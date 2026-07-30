@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Carbon Trace · JulyNexus",
+  title: "Carbon Trace · JulyDigonto",
   description:
     "An immersive visual narrative about the carbon cycle, from coal to diamond to circuit to light.",
 }

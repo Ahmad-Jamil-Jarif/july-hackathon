@@ -89,7 +89,7 @@
 
 /* ===== Memorial Museum (স্মৃতিসৌধ) homepage styles =====
    Scoped under `.memorial-scope` so they only apply to the homepage
-   and don't leak into the rest of the JulyNexus app. */
+  and don't leak into the rest of the JulyDigonto app. */
 .memorial-scope {
   color: #E2E2E2;
   overflow-x: hidden;

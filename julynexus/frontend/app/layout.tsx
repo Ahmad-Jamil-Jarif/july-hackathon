@@ -30,9 +30,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "JulyNexus — Evidentiary Truth, Civic Dignity, Verified Memory",
+  title: "JulyDigonto — Evidentiary Truth, Civic Dignity, Verified Memory",
   description:
-    "JulyNexus is a civic-tech platform for the July Uprising: AI forensics, IPFS vault, and victim-aid transparency.",
+    "JulyDigonto is a civic-tech platform for the July Uprising: AI forensics, IPFS vault, and victim-aid transparency.",
   keywords: [
     "deepfake detection",
     "civic memory",
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     "IPFS",
     "aid transparency",
   ],
-  authors: [{ name: "JulyNexus" }],
+  authors: [{ name: "JulyDigonto" }],
   openGraph: {
-    title: "JulyNexus",
+    title: "JulyDigonto",
     description:
       "Verify. Preserve. Serve. — Evidentiary truth infrastructure for civic memory.",
     type: "website",

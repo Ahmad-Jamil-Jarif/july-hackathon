@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { MemorialClient } from "./memorial-client"
 
 export const metadata: Metadata = {
-  title: "Memorial · JulyNexus",
+  title: "Memorial · JulyDigonto",
   description:
     "Honor the martyrs of the July uprising. Each testimony is pinned to IPFS and plotted on the public map.",
 }

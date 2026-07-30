@@ -87,7 +87,7 @@ export function KioskSimulator() {
           ? "OFFLINE QUEUE   "
           : motion
             ? `RFID: ${(rfid || "----").slice(0, 8).padEnd(8, " ")}     `
-            : "JulyNexus Kiosk "
+            : "JulyDigonto Kiosk "
 
     const line2 = online
       ? `OK | buf:${String(buffer.length).padStart(2, " ")} | ${new Date().toLocaleTimeString().slice(0, 8)}`

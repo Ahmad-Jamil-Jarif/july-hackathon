@@ -31,7 +31,7 @@ export function Nav() {
           <span className="flex size-8 items-center justify-center rounded-md bg-bd-flag text-xs font-bold text-white shadow-sm">
             JN
           </span>
-          <span className="hidden text-base sm:inline">JulyNexus</span>
+          <span className="hidden text-base sm:inline">JulyDigonto</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

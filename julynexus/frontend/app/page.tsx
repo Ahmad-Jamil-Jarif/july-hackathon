@@ -40,7 +40,7 @@ export default function HomePage() {
               Verified Memory.
             </h1>
             <p className="mt-6 max-w-2xl text-balance text-lg text-muted-foreground">
-              JulyNexus turns the three cascading crises of the July Uprising
+              JulyDigonto turns the three cascading crises of the July Uprising
               into one trustworthy infrastructure: AI forensics to verify
               evidence, a content-addressed vault to preserve it, and an
               aid-disbursement ledger that respects dignity.

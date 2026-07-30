@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Heard · JulyNexus",
+  title: "Heard · JulyDigonto",
   description:
     "Turn a personal grievance into political action — in one conversation. Heard's Claude-powered agents research the issue, find every official with jurisdiction, and hand you a complete advocacy toolkit.",
 }

@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { VaultClient } from "./vault-client"
 
 export const metadata: Metadata = {
-  title: "Evidence Vault · JulyNexus",
+  title: "Evidence Vault · JulyDigonto",
   description:
     "Browse, fetch, and retrieve the verified media files stored on IPFS through the local gateway.",
 }

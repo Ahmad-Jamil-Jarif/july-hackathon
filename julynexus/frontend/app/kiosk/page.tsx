@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { KioskClient } from "./kiosk-client"
 
 export const metadata: Metadata = {
-  title: "Kiosk Simulator · JulyNexus",
+  title: "Kiosk Simulator · JulyDigonto",
   description:
     "ESP32 kiosk hardware simulator with offline-first queue, panic button, RFID, and citizen tribute form.",
 }
