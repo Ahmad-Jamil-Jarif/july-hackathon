@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next"
-import { Inter, Space_Grotesk } from "next/font/google"
-
-import { Nav } from "@/components/nav"
+import { Inter, Space_Grotesk, EB_Garamond, JetBrains_Mono } from "next/font/google"
 import { Toaster } from "@/components/ui/toaster"
+
+import { MemorialShell } from "./memorial-shell"
 
 import "./globals.css"
 
@@ -14,6 +14,19 @@ const inter = Inter({
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
+})
+
+// Memorial Museum typography
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-eb-garamond",
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500"],
+  variable: "--font-jetbrains-mono",
 })
 
 export const metadata: Metadata = {
@@ -49,19 +62,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
+      </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${ebGaramond.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <Nav />
-        <main className="min-h-[calc(100vh-4rem)]">{children}</main>
-        <footer className="border-t border-border bg-card/50 py-8 text-center text-xs text-muted-foreground">
-          <div className="container mx-auto max-w-6xl px-4">
-            <p className="font-semibold text-foreground">
-              জুলাই নেক্সাস · JulyNexus · Built for the July Uprising Memorial Hackathon
-            </p>
-            <p className="mt-1">MIT License · For reproducibility</p>
-          </div>
-        </footer>
+        <MemorialShell>{children}</MemorialShell>
         <Toaster />
       </body>
     </html>
