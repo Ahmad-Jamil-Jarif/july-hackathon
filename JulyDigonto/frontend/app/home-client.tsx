@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import Image from "next/image"
+import { useEffect } from "react"
 
 type Martyr = {
   name: string
@@ -80,7 +81,6 @@ const TIMELINE: TimelineEvent[] = [
 ]
 
 export function HomeClient() {
-  const navRef = useRef<HTMLElement>(null)
 
   // Security scripts (right-click block, devtools key combo block, devtools open detect)
   useEffect(() => {
@@ -134,25 +134,6 @@ export function HomeClient() {
     return () => observer.disconnect()
   }, [])
 
-  // Nav shrink on scroll
-  useEffect(() => {
-    const nav = navRef.current
-    if (!nav) return
-
-    const onScroll = () => {
-      if (window.scrollY > 50) {
-        nav.classList.add("h-16")
-        nav.classList.remove("h-20")
-      } else {
-        nav.classList.add("h-20")
-        nav.classList.remove("h-16")
-      }
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
 
   return (
     <div className="memorial-scope">
@@ -176,57 +157,7 @@ export function HomeClient() {
       <div className="red-bar-right hidden md:block" />
       <div className="red-dot-top-right" />
 
-      {/* Nav */}
-      <nav
-        ref={navRef}
-        className="fixed top-0 w-full z-50 bg-mn-surface/80 backdrop-blur-md border-b border-mn-border-subtle h-20 transition-all duration-500"
-      >
-        <div className="flex justify-between items-center w-full px-mn-margin-desktop max-w-screen-2xl mx-auto h-full">
-          <div className="flex items-center gap-8">
-            <a
-              className="font-mn-headline-md text-mn-headline-md text-mn-primary tracking-tight"
-              href="#"
-            >
-              স্মৃতিসৌধ
-            </a>
-            <div className="hidden md:flex gap-6 items-center">
-              <a
-                className="font-mn-label-md text-mn-label-md text-mn-primary border-b border-mn-primary pb-1"
-                href="#"
-              >
-                সংগ্রহশালা
-              </a>
-              <a
-                className="font-mn-label-md text-mn-label-md text-mn-on-surface-variant hover:text-mn-primary transition-colors duration-300"
-                href="#"
-              >
-                শহীদ তালিকা
-              </a>
-              <a
-                className="font-mn-label-md text-mn-label-md text-mn-on-surface-variant hover:text-mn-primary transition-colors duration-300"
-                href="#"
-              >
-                ইতিহাস
-              </a>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <button
-              type="button"
-              className="material-symbols-outlined text-mn-on-surface hover:opacity-70 transition-opacity"
-              aria-label="Search"
-            >
-              search
-            </button>
-            <button
-              type="button"
-              className="bg-mn-primary text-mn-on-primary px-6 py-2 font-mn-label-md text-mn-label-md uppercase tracking-widest hover:bg-opacity-90 transition-all"
-            >
-              অনুদান
-            </button>
-          </div>
-        </div>
-      </nav>
+      {/* Nav is provided by the shared `Nav` component in /components */}
 
       <main className="relative z-10">
         {/* Hero */}
@@ -379,7 +310,7 @@ export function HomeClient() {
               <div className="mt-12 aspect-video bg-mn-surface-container overflow-hidden relative border border-mn-border-subtle">
                 <img
                   alt="Mass Protest Archive"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60"
+                  className="w-full h-full object-cover opacity-60"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj47wP5kNFyMVLAS89Kql5zAtASmICyFbeL1F6eReKb4cYEETUZow2905XQwiHnuPBDLkVTSLgC93nnxX6nPORvqrr4W840xkm0GUgw6bhu47Ige3n404bx_IHEZ_so4yqVjounym74iNOlk2hUHfM4HShfolk1jKKFUpINvAKNBOxOyOkAxBJWag-pVd6dgA5L8Xq8MrcdPfSg2dpXd-H5kS6yYyN6vKbnyQtV1KWXM6HrKyhWzF4"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">

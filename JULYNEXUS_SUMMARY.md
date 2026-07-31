@@ -52,7 +52,7 @@ JulyDigonto addresses the three critical societal crises during and after mass m
   - Ready for frontend integration in `/ledger` route
 
 #### 4. IoT Civic Dignity Interactive Kiosk
-- **Location**: `julynexus/iot-kiosk/kiosk_controller.ino`
+- **Location**: `JulyDigonto/iot-kiosk/kiosk_controller.ino`
 - **Technology**: Arduino Uno
 - **Features Implemented**:
   - Motion-activated welcome screen (PIR sensor)
@@ -139,7 +139,7 @@ JulyDigonto addresses the three critical societal crises during and after mass m
 - `ai-engine/` - Python FastAPI microservice for forensics
   - `JulyDigonto/` - Complete JulyDigonto project structure
   - `iot-kiosk/` - Arduino firmware for civic dignity kiosk
-- `julynexus/readme.md` - Project documentation
+- `JulyDigonto/readme.md` - Project documentation
 
 ### New Files:
 - `ai-engine/main.py` - FastAPI application entry point
@@ -185,7 +185,7 @@ npm run dev
 ```
 
 ### IoT Kiosk
-1. Open `julynexus/iot-kiosk/kiosk_controller.ino` in Arduino IDE
+1. Open `JulyDigonto/iot-kiosk/kiosk_controller.ino` in Arduino IDE
 2. Select appropriate board and port
 3. Upload sketch to Arduino Uno
 4. Wire components per schematic in documentation

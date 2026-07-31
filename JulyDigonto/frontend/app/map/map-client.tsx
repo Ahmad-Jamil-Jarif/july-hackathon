@@ -11,7 +11,7 @@ const CivicInteractiveMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-[600px] items-center justify-center rounded-2xl border border-border bg-card">
+      <div className="flex h-[600px] items-center justify-center bento-card border-border-subtle bg-mn-surface-container">
         <Loader2 className="size-6 animate-spin text-primary" />
       </div>
     ),
@@ -20,7 +20,7 @@ const CivicInteractiveMap = dynamic(
 
 export function MapClient() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="overflow-hidden bento-card border-border-subtle bg-mn-surface-container shadow-sm">
       <CivicInteractiveMap />
     </div>
   )

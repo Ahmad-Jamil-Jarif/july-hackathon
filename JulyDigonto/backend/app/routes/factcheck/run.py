@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 
 from .. import config
 from ..ratelimit import get_limiter
-from .factcheck.pipeline import stream_pipeline
+from ..services.factcheck.pipeline import stream_pipeline
 
 router = APIRouter(prefix="/api/v1/factcheck", tags=["factcheck"])
 

@@ -1,9 +1,10 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ShieldCheck, MapPin, Menu } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -23,14 +24,22 @@ const NAV_LINKS = [
 export function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [shrink, setShrink] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setShrink(window.scrollY > 48)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="flex size-8 items-center justify-center rounded-md bg-bd-flag text-xs font-bold text-white shadow-sm">
-            JN
-          </span>
+      <div className={cn("container mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 transition-all", shrink ? "h-12" : "h-16")}>
+        <Link href="/" className="flex items-center gap-3 font-semibold tracking-tight">
+          <div className="relative w-10 h-10 rounded-sm overflow-hidden bg-muted">
+            <Image src="/logo1.jpeg" alt="JulyDigonto" fill sizes="40px" className="object-cover" />
+          </div>
           <span className="hidden text-base sm:inline">JulyDigonto</span>
         </Link>
 

@@ -69,7 +69,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${ebGaramond.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${ebGaramond.variable} ${jetbrainsMono.variable} font-sans antialiased dark bg-mn-surface-deep`}
       >
         <MemorialShell>{children}</MemorialShell>
         <Toaster />

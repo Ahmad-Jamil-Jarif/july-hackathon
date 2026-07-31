@@ -18,7 +18,7 @@ from typing import AsyncIterator
 
 import yt_dlp
 
-from steps.downloader import _find_ffmpeg_dir
+from .downloader import _find_ffmpeg_dir
 
 # ---------------------------------------------------------------------------
 # Process-wide registry of active ffmpeg Popen instances.
